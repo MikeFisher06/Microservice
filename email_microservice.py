@@ -1,9 +1,12 @@
 import smtplib
 import zmq
-import time
 import json
+import os
 
+from dotenv import load_dotenv
 from email.message import EmailMessage
+
+load_dotenv()
 
 
 def email_notification():
@@ -33,11 +36,9 @@ def email_notification():
         return
 
     # Create file to attach to email
-    with open("received_paystub.pdf", "wb") as f:
+    file_name = f"{email_data['name']}_{email_data['type']}.pdf"
+    with open(file_name, "wb") as f:
         f.write(message)
-
-    # Sleep
-    time.sleep(3)
 
     # Compose and send email
 
@@ -48,20 +49,23 @@ def email_notification():
     s.starttls()
 
     # Authentication
-    s.login("evoskate@gmail.com", "udli wwpe llqj mvdk")
+    my_email = os.getenv("EMAIL_ADDRESS")
+    app_password = os.getenv("APP_PASSWORD")
+    s.login(my_email, app_password)
 
     msg = EmailMessage()
     msg['Subject'] = f"{email_data["name"]} {email_data["type"]}"
     msg['From'] = 'evoskate@gmail.com'
     msg['To'] = f"{email_data["email"]}"
 
-    with open("received_paystub.pdf", "rb") as f:
+    with open(file_name, "rb") as f:
         file_data = f.read()
 
     msg.add_attachment(file_data, maintype='application',
                        subtype='pdf',
-                       filename="received_paystub.pdf")
+                       filename=file_name)
     s.send_message(msg)
+    s.quit()
 
 
 if __name__ == '__main__':

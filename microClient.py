@@ -1,6 +1,5 @@
 import zmq
 import json
-import os
 
 
 def micro_client():
@@ -9,7 +8,7 @@ def micro_client():
     socket.connect("tcp://localhost:5555")
 
     # Send JSON of email request info
-    email_data = {"name": "Mike",
+    email_data = {"name": "Mike Fisher",
                   "email": "mikef906@hotmail.com",
                   "type": "paystub"}
     json_data = json.dumps(email_data)
