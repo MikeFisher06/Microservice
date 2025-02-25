@@ -9,7 +9,7 @@ def micro_client():
 
     # Send JSON of email request info
     email_data = {"name": "Mike Fisher",
-                  "email": "mikef906@hotmail.com",
+                  "email": "fishemic@oregonstate.edu",
                   "type": "paystub"}
     json_data = json.dumps(email_data)
     print("Client is sending email request info")

@@ -55,7 +55,7 @@ def email_notification():
 
     msg = EmailMessage()
     msg['Subject'] = f"{email_data["name"]} {email_data["type"]}"
-    msg['From'] = 'evoskate@gmail.com'
+    msg['From'] = my_email
     msg['To'] = f"{email_data["email"]}"
 
     with open(file_name, "rb") as f:
